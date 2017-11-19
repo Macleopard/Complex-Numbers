@@ -16,5 +16,18 @@ namespace complex_numbers
         {
             InitializeComponent();
         }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void Form1_Paint(object sender, PaintEventArgs e) {
+            Graphics gr = e.Graphics;
+            Pen p = new Pen(Color.Red, 3);
+            gr.DrawLine(p, (this.Width-200)/2, 0, (this.Width - 200) / 2, this.Height);
+            gr.DrawLine(p, 0, this.Height/2, this.Width-200, this.Height/2);
+            gr.Dispose();
+        }
     }
 }
