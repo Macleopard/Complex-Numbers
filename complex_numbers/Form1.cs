@@ -81,5 +81,12 @@ namespace complex_numbers
         private void Form1_Paint(object sender, PaintEventArgs e) {
             draw_axis();
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            Graphics gr = this.CreateGraphics();
+            gr.Clear(this.BackColor);
+            draw_axis();
+        }
     }
 }
