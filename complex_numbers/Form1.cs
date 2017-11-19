@@ -30,7 +30,7 @@ namespace complex_numbers
             float x_centre = (this.Width - 200) / 2, y_centre = this.Height / 2;
             Pen point = new Pen(Color.Black, 4);
             // отобразить точку на плоскости
-            gr.FillEllipse(Brushes.Black, x_centre+re*20, y_centre+im*20, 4, 4);
+            gr.FillEllipse(Brushes.Black, x_centre+re*20, y_centre-im*20, 4, 4);
             // рисуем стрелочку рандомный цветом
             Random rnd = new Random();
             Byte[] b = new Byte[3];
@@ -38,7 +38,7 @@ namespace complex_numbers
             Color arrow_color = Color.FromArgb(b[0],b[1],b[2]);
             Pen arrow = new Pen(arrow_color, 4);
             arrow.EndCap = LineCap.ArrowAnchor;
-            gr.DrawLine(arrow,x_centre,y_centre,(x_centre + re * 20)+1, y_centre + im * 20);
+            gr.DrawLine(arrow,x_centre,y_centre,(x_centre + re * 20)+1, y_centre - im * 20);
         }
 
         private void draw_axis()
@@ -129,42 +129,22 @@ namespace complex_numbers
                     case 0:
                         re = re1 + re2;
                         im = im1 + im2;
-                        if (im > 0)
-                            textBox3.Text = re.ToString() + "+" + im.ToString() + "i";
-                        else if (im < 0)
-                            textBox3.Text = re.ToString() + im.ToString() + "i";
-                        else if (im == 0)
-                            textBox3.Text = re.ToString() + "+" + im.ToString() + "i";
+                        textBox3.Text = re.ToString() + "+" + im.ToString() + "i";
                         break;
                     case 1:
                         re = re1 - re2;
                         im = im1 - im2;
-                        if (im > 0)
-                            textBox3.Text = re.ToString() + "+" + im.ToString() + "i";
-                        else if (im < 0)
-                            textBox3.Text = re.ToString() + im.ToString() + "i";
-                        else if (im == 0)
-                            textBox3.Text = re.ToString() + "+" + im.ToString() + "i";
+                        textBox3.Text = re.ToString() + "+" + im.ToString() + "i";
                         break;
                     case 2:
                         re = re1 * re2 - im1 * im2;
                         im = im1 * re2 + re1 * im2;
-                        if (im > 0)
-                            textBox3.Text = re.ToString() + "+" + im.ToString() + "i";
-                        else if (im < 0)
-                            textBox3.Text = re.ToString() + im.ToString() + "i";
-                        else if (im == 0)
-                            textBox3.Text = re.ToString() + "+" + im.ToString() + "i";
+                        textBox3.Text = re.ToString() + "+" + im.ToString() + "i";
                         break;
                     case 3:
                         re = (re1 * re2 + im1 * im2) / (re2 * re2 + im2 * im2);
                         im = (im1 * re2 - re1 * im2) / (re2 * re2 + im2 * im2);
-                        if (im > 0)
-                            textBox3.Text = re.ToString() + "+" + im.ToString() + "i";
-                        else if (im < 0)
-                            textBox3.Text = re.ToString() + im.ToString() + "i";
-                        else if (im == 0)
-                            textBox3.Text = re.ToString() + "+" + im.ToString() + "i";
+                        textBox3.Text = re.ToString() + "+" + im.ToString() + "i";
                         break;
                 }
             }
@@ -174,21 +154,25 @@ namespace complex_numbers
         {
             String inp = textBox3.Text;
             inp = inp.Replace(',', '.');
+            String re1="", im1="";
             float re, im;
-            string regexPattern =
-            @"([-+]?\d+\.?\d*|[-+]?\d*\.?\d+)" +
-            @"\s*" +
-            @"[-+]" +
-            @"\s*" +
-            @"([-+]?\d+\.?\d*|[-+]?\d*\.?\d+)" +
-            @"i";
-            Regex regex = new Regex(regexPattern);
-            if (inp != ""){
-                Match match = regex.Match(inp);
-                re = float.Parse(match.Groups[1].Value, CultureInfo.InvariantCulture);
-                im = float.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
-                show_complex(re, im);
+            int k=0;
+            inp = inp.Replace('i',' ');
+            inp = inp.Trim();
+            for (int i = 0; i < inp.Length; i++)
+            {
+                re1 += inp[i];
+                if ((inp[i + 1] == '+') || (inp[i + 1]) == '-')
+                {
+                    k = i + 1;
+                    break;
+                }
             }
+            for (int i = k; i < inp.Length; i++)
+                im1 += inp[i];
+            re = float.Parse(re1);
+            im = float.Parse(im1);
+            show_complex(re, im);
         }
     }
 }
