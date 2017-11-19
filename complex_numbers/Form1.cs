@@ -30,7 +30,7 @@ namespace complex_numbers
             float x_centre = (this.Width - 200) / 2, y_centre = this.Height / 2;
             Pen point = new Pen(Color.Black, 4);
             // отобразить точку на плоскости
-            gr.FillEllipse(Brushes.Black, x_centre+re*20, y_centre-im*20, 4, 4);
+            gr.FillEllipse(Brushes.Black, x_centre+re*20, y_centre+im*20, 4, 4);
             // рисуем стрелочку рандомный цветом
             Random rnd = new Random();
             Byte[] b = new Byte[3];
@@ -38,7 +38,7 @@ namespace complex_numbers
             Color arrow_color = Color.FromArgb(b[0],b[1],b[2]);
             Pen arrow = new Pen(arrow_color, 4);
             arrow.EndCap = LineCap.ArrowAnchor;
-            gr.DrawLine(arrow,x_centre,y_centre,(x_centre + re * 20)+1, y_centre - im * 20);
+            gr.DrawLine(arrow,x_centre,y_centre,(x_centre + re * 20)+1, y_centre + im * 20);
         }
 
         private void draw_axis()
