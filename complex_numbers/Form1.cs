@@ -25,18 +25,40 @@ namespace complex_numbers
 
         private void draw_axis()
         {
+            int clientWidth = this.Width - 200;
+            int clientHeight = this.Height;
+            int k = -19;
+            int l = 14;
+            float i = 19; // clientWidth / 2 + 20 
+            float j = 19;
             // отрисовка осей и их подпись
             Graphics gr = this.CreateGraphics();
             Pen axis = new Pen(Color.Red, 4);
             axis.StartCap = LineCap.ArrowAnchor;
-            Font font = new Font("Tahoma", 16);
+            Font font = new Font("Tahoma", 14);
+            Font points_font = new Font("Tahoma", 8);
             SolidBrush brush = new SolidBrush(Color.Black);
             // сами оси
-            gr.DrawLine(axis, (this.Width - 200) / 2, 0, (this.Width - 200) / 2, this.Height);
-            gr.DrawLine(axis, this.Width - 200, this.Height / 2, 0, this.Height / 2);
+            gr.DrawLine(axis, clientWidth / 2, 0, clientWidth / 2, clientHeight);
+            gr.DrawLine(axis, clientWidth, clientHeight / 2, 0, clientHeight / 2);
+            
+            while (i < clientWidth-1) {
+                gr.FillEllipse(Brushes.Black,i,clientHeight/2-2,4,4);
+                gr.DrawString(k.ToString(), points_font, Brushes.Black, i, clientHeight/2+10);
+                k++;
+                i += 20;
+            }
+            while (j < clientHeight-1)
+            {
+                gr.FillEllipse(Brushes.Black,clientWidth/2-1,j,4,4);
+                if (l!=0)
+                    gr.DrawString(l.ToString()+"i",points_font,Brushes.Black,clientWidth/2+5,j);
+                l--;
+                j += 20;
+            }
             // надписи около осей
-            gr.DrawString("Re", font, brush, (this.Width-200)/2 + 10, 10);
-            gr.DrawString("Im", font, brush, (this.Width-200) - 30, this.Height/2 + 10);
+            gr.DrawString("Im", font, brush, clientWidth / 2 + 20, 10);
+            gr.DrawString("Re", font, brush, clientWidth - 30, clientHeight / 2 + 15);
             gr.Dispose();
         }
 
